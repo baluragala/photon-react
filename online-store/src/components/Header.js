@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Link } from "react-router-dom";
 const Header = props => (
   <div className="container">
     <header>
@@ -98,12 +98,12 @@ const Header = props => (
             </ul>
           </div>
         </div>
-        <a href="log in.html" className="button-login">
+        <Link to="/login" className="button-login">
           Log in
-        </a>
-        <a href="sign up.html" className="button-signup">
+        </Link>
+        <Link to="/signup" className="button-signup">
           Sign up
-        </a>
+        </Link>
       </div>
     </header>
   </div>

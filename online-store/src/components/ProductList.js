@@ -14,9 +14,10 @@ class ProductList extends Component {
     };
   }
 
-  handleCartClick(product) {
+  handleCartClick = product => {
     console.log(product);
-  }
+    this.setState({ test: 1 });
+  };
 
   renderProducts() {
     return this.state.products.map(p => (
