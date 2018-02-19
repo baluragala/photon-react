@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.js"></script>
+    <title>Just Redux</title>
+</head>
+
+<body>
+    <h1 id="counter">0</h1>
+    <button onclick="store.dispatch(incAction)">INC</button>
+    <button onclick="store.dispatch(decAction)">DEC</button>
+    <script>
+        /*
+            1. store
+            2. action
+            3. reducer
+        */
+        var incAction = { type: "INC", by: 10 }
+        var decAction = { type: "DEC", by: 5 }
+
+        function reducer(prevState = { counter: 0 }, action) {
+            console.log(prevState, action);
+            switch (action.type) {
+                case "INC":
+                    return { counter: prevState.counter + action.by }
+                case "DEC":
+                    return { counter: prevState.counter - action.by }
+                default:
+                    return prevState;
+            }
+        }
+
+        var store = Redux.createStore(reducer);
+        store.subscribe(() => console.log(store.getState()))
+        store.subscribe(() => {
+            document.getElementById("counter").innerText = store.getState().counter;
+        })
+
+        // store.dispatch(incAction);
+        // store.dispatch(incAction);
+        // store.dispatch(incAction);
+        // store.dispatch(incAction);
+        // store.dispatch(incAction);
+        // store.dispatch({ type: "TEST" });
+        // store.dispatch({ type: "TEST" });
+
+    </script>
+</body>
+
+</html>
