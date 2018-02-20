@@ -9,30 +9,36 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProductDetail from "./components/ProductDetail";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as productActions from "./actionCreators/products";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { isLoggedIn: false };
   }
 
-  doLogin = () => {
-    this.setState({ isLoggedIn: true });
-  };
+  componentWillMount() {
+    this.props.actions.getProducts();
+  }
+
   render() {
+    console.log(this.props.isLoading);
     return (
       <div>
         <Header />
-        <button style={{ paddingTop: "100px" }} onClick={this.doLogin}>
-          Simulate Login
-        </button>
+
         <Switch>
           <Route
             exact
             path="/"
-            render={props => (
-              <ProductList {...props} category={"electronics"} />
-            )}
+            render={props =>
+              this.props.isLoading ? (
+                <p style={{ paddingTop: "100px" }}>Loading...</p>
+              ) : (
+                <ProductList {...props} products={this.props.products} />
+              )
+            }
           />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
@@ -52,4 +58,16 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    products: state.products,
+    isLoading: state.isLoading
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(productActions, dispatch)
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
