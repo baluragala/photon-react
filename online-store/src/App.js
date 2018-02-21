@@ -12,6 +12,7 @@ import ProductDetail from "./components/ProductDetail";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as productActions from "./actionCreators/products";
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -60,8 +61,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.products,
-    isLoading: state.isLoading
+    products: state.productsState.products,
+    isLoading: state.productsState.isLoading
   };
 }
 
@@ -70,4 +71,4 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(productActions, dispatch)
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -19,5 +19,5 @@ function* getProducts() {
 }
 
 export function* getProductsWatcher() {
-  yield takeLatest(GET_PRODUCTS, getProducts);
+  yield [takeLatest(GET_PRODUCTS, getProducts)];
 }
